@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f5f8fc">
+  <meta name="description" content="校園設備故障回報互動展示版：選擇設備、填寫故障類型與說明，即可體驗回報流程。">
+  <title>校園修繕｜設備故障回報</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="site-header">
+      <div class="brand" aria-label="校園修繕 Campus Care">
+        <span class="brand-symbol" aria-hidden="true">
+          <svg viewBox="0 0 36 36" fill="none" aria-hidden="true"><path d="M9 26V13L18 7L27 13V26H9Z" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 26V19H21V26M6 28H30" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="brand-words"><strong>校園修繕</strong><small>CAMPUS CARE</small></span>
+      </div>
+      <span class="prototype-tag"><span class="tag-dot" aria-hidden="true"></span>互動展示版</span>
+    </header>
+
+    <main class="main-layout">
+      <section class="intro" aria-labelledby="intro-heading">
+        <p class="eyebrow"><span class="eyebrow-line" aria-hidden="true"></span>校園設備通報系統</p>
+        <h1 id="intro-heading">設備出了狀況？<br><span>讓我們知道。</span></h1>
+        <p class="intro-description">飲水機、冷氣或投影機遇到問題時，只要選擇設備、說明狀況，就能完成一筆模擬回報。</p>
+
+        <div class="overview" aria-label="回報流程">
+          <p class="overview-title">簡單三步驟</p>
+          <div class="overview-item"><span class="overview-number">01</span><span>選擇故障設備</span><span class="overview-line" aria-hidden="true"></span></div>
+          <div class="overview-item"><span class="overview-number">02</span><span>選擇問題與描述</span><span class="overview-line" aria-hidden="true"></span></div>
+          <div class="overview-item"><span class="overview-number">03</span><span>查看回報確認</span><span class="overview-line" aria-hidden="true"></span></div>
+        </div>
+
+        <div class="intro-note">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M12 11V16M12 8.1V8.5" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg>
+          <span>本頁僅供操作展示，不會儲存資料或通知維修單位。</span>
+        </div>
+      </section>
+
+      <section class="workspace" id="workspace" aria-label="設備故障回報表單">
+        <div id="reportScreen">
+          <div class="card-header">
+            <div>
+              <p class="section-kicker">NEW REPORT</p>
+              <h2>建立故障回報</h2>
+              <p class="card-subtitle">請依序填寫以下資訊</p>
+            </div>
+            <span class="header-icon" aria-hidden="true">
+              <svg viewBox="0 0 28 28" fill="none"><path d="M7 4.5H17L22 9.5V23.5H7V4.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M17 4.5V10H22M10.5 14H18M10.5 18H16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+            </span>
+          </div>
+
+          <div class="progress-area" aria-label="填寫進度">
+            <div class="progress-labels"><span>填寫進度</span><span id="progressText" aria-live="polite">已完成 0 / 3 項</span></div>
+            <div class="progress-track" id="progressTrack" role="progressbar" aria-label="回報填寫進度" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span class="progress-fill" id="progressFill"></span></div>
+          </div>
+
+          <form id="reportForm" novalidate>
+            <fieldset class="form-section equipment-section" aria-describedby="equipmentHelp equipmentError">
+              <legend class="field-heading"><span class="step-number">01</span><span>選擇設備</span><span class="required">必填</span></legend>
+              <p class="field-hint" id="equipmentHelp">哪一項設備需要維修？</p>
+              <div class="equipment-options" role="group" aria-label="設備選項">
+                <button class="equipment-option" type="button" data-equipment="water" aria-pressed="false">
+                  <span class="equipment-check" aria-hidden="true">✓</span>
+                  <span class="equipment-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><rect x="13" y="5" width="22" height="38" rx="4" stroke="currentColor" stroke-width="2"/><path d="M17 16H31M21 11H27M21 23H27M24 23V27" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M24 31C24 31 20.5 35.2 20.5 37A3.5 3.5 0 0 0 27.5 37C27.5 35.2 24 31 24 31Z" fill="currentColor" opacity=".65"/></svg></span>
+                  <strong>飲水機</strong><small>Water Dispenser</small>
+                </button>
+                <button class="equipment-option" type="button" data-equipment="air" aria-pressed="false">
+                  <span class="equipment-check" aria-hidden="true">✓</span>
+                  <span class="equipment-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="10" width="36" height="22" rx="5" stroke="currentColor" stroke-width="2"/><path d="M11 22H37M13 27H35M15 16H20M16 36C14 38 14 40 16 42M24 36C22 38 22 40 24 42M32 36C30 38 30 40 32 42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+                  <strong>冷氣</strong><small>Air Conditioner</small>
+                </button>
+                <button class="equipment-option" type="button" data-equipment="projector" aria-pressed="false">
+                  <span class="equipment-check" aria-hidden="true">✓</span>
+                  <span class="equipment-icon" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><rect x="6" y="14" width="36" height="23" rx="5" stroke="currentColor" stroke-width="2"/><circle cx="28" cy="25.5" r="6.5" stroke="currentColor" stroke-width="2"/><circle cx="28" cy="25.5" r="2.5" fill="currentColor" opacity=".6"/><path d="M12 22H16M12 27H16M13 37V41M35 37V41" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>
+                  <strong>投影機</strong><small>Projector</small>
+                </button>
+              </div>
+              <p class="field-error" id="equipmentError" role="alert" hidden></p>
+            </fieldset>
+
+            <fieldset class="form-section" aria-describedby="problemHelp problemError">
+              <legend class="field-heading"><span class="step-number">02</span><span>問題類型</span><span class="required">必填</span></legend>
+              <p class="field-hint" id="problemHelp">請選擇最接近的故障狀況。</p>
+              <div class="problem-options" id="problemOptions" role="group" aria-label="問題類型">
+                <div class="empty-options"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 8L12 14L18 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg><span>請先選擇上方設備</span></div>
+              </div>
+              <p class="field-error" id="problemError" role="alert" hidden></p>
+            </fieldset>
+
+            <div class="form-section description-section">
+              <label for="description" class="field-heading"><span class="step-number">03</span><span>補充說明</span><span class="required">必填</span></label>
+              <p class="field-hint" id="descriptionHelp">簡單說明發生的狀況，幫助釐清問題。</p>
+              <textarea id="description" name="description" rows="4" maxlength="160" placeholder="例如：二樓走廊的飲水機按下熱水鍵後沒有出水……" aria-describedby="descriptionHelp descriptionCount descriptionError"></textarea>
+              <div class="textarea-meta"><p class="field-error" id="descriptionError" role="alert" hidden></p><span class="char-count" id="descriptionCount">0 / 160 字</span></div>
+            </div>
+
+            <button class="submit-button" type="submit"><span>送出回報</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 12H19.5M13.5 6L19.5 12L13.5 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <p class="form-footnote">展示模式：按下送出後僅顯示確認畫面，不會真的建立維修工單。</p>
+          </form>
+        </div>
+
+        <section class="success-screen" id="successScreen" aria-labelledby="successTitle" hidden>
+          <div class="success-art" aria-hidden="true"><span class="success-ring"><svg viewBox="0 0 52 52" fill="none"><path d="M13 26.5L22 35L39 17" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+          <p class="success-eyebrow">REPORT COMPLETE · DEMO</p>
+          <h2 id="successTitle" tabindex="-1">模擬回報完成！</h2>
+          <p class="success-description">以下是這次填寫的回報內容。此操作僅供展示，資料並未傳送給維修單位。</p>
+          <div class="report-summary" aria-label="回報內容摘要">
+            <div class="summary-heading"><span>回報摘要</span><span class="summary-badge">展示資料</span></div>
+            <dl>
+              <div><dt>設備</dt><dd id="summaryEquipment"></dd></div>
+              <div><dt>問題類型</dt><dd id="summaryProblem"></dd></div>
+              <div class="summary-description"><dt>補充說明</dt><dd id="summaryDescription"></dd></div>
+            </dl>
+          </div>
+          <button type="button" class="submit-button another-button" id="anotherReport"><span>再回報一筆</span><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4.5 12H19.5M13.5 6L19.5 12L13.5 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer"><span>校園設備故障回報 · 互動原型</span><span>DESIGNED FOR A BETTER CAMPUS</span></footer>
+  </div>
+</body>
+</html>
