@@ -1,0 +1,75 @@
+name: Deploy both APP versions to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - v2
+    paths:
+      - index.html
+      - style.css
+      - script.js
+      - .github/workflows/deploy-pages.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main (V1)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: main-source
+          persist-credentials: false
+
+      - name: Check out v2 (V2)
+        uses: actions/checkout@v4
+        with:
+          ref: v2
+          path: v2-source
+          persist-credentials: false
+
+      - name: Assemble V1 and V2 at separate URLs
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p public/main public/v2
+          for file in index.html style.css script.js; do
+            # Keep the original /PSStest02/ link working as V1.
+            cp "main-source/$file" "public/$file"
+            # Named version URLs: /PSStest02/main/ and /PSStest02/v2/.
+            cp "main-source/$file" "public/main/$file"
+            cp "v2-source/$file" "public/v2/$file"
+          done
+          touch public/.nojekyll
+          echo "Files ready:"
+          find public -maxdepth 2 -type f | sort
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload static site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
