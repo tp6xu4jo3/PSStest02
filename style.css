@@ -16,3 +16,141 @@
 @media(max-width:520px){.site-shell{padding:0 10px}.topbar{padding:0 9px;height:73px}.identity{gap:9px}.identity-mark{width:39px;height:39px;border-radius:11px}.identity-mark svg{width:32px;height:32px}.identity-type strong{font-size:14px}.identity-type small{font-size:9px}.topbar-edition{font-size:9px;letter-spacing:.03em;gap:7px}.topbar-edition b{font-size:9px}.story-inner{padding:24px 23px 23px}.story-kicker{font-size:9px;letter-spacing:.12em}.story-panel h1{font-size:clamp(28px,8vw,38px);margin:20px 0 10px}.story-description{font-size:12px}.work-panel{padding:24px 18px 26px}.form-intro h2{font-size:29px}.form-intro-note{font-size:12px}.form-edition{width:52px;height:52px;font-size:11px}.form-edition span{top:8px;right:9px}.progress-block{margin-top:27px}.form-step{padding:28px 0 25px}.step-title{gap:11px}.step-num{width:35px;height:35px;border-radius:10px;font-size:12px}.step-title h3{font-size:17px}.equipment-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.equipment-card{padding:11px 3px;min-height:81px;gap:7px;border-radius:11px}.equipment-card svg{width:24px;height:24px}.equipment-card .item-name{font-size:11px;letter-spacing:-.05em}.card-check{top:3px;right:3px;width:14px;height:14px;font-size:10px}.location-grid{grid-template-columns:1fr 0.76fr;gap:9px}.problem-grid{gap:7px}.problem-choice{font-size:11px;padding:9px;gap:6px;min-height:50px}.guide-toggle{gap:8px;padding:12px}.guide-symbol{width:32px;height:32px;font-size:18px}.guide-heading b{font-size:12px}.guide-heading small{font-size:9px}.guide-content{padding:0 14px 14px 53px}.urgency-grid{gap:6px}.urgency-option{font-size:10px;gap:5px;padding:9px 3px;min-height:44px}.urgency-indicator{width:14px;height:14px}.photo-drop{padding:11px}.site-footer{padding:21px 9px 27px}.site-footer span:last-child{display:none}}
 @media(max-width:350px){.topbar-edition{font-size:8px}.identity-type strong{font-size:13px}.equipment-card .item-name{font-size:10px}.urgency-option{font-size:9px}.location-grid{grid-template-columns:1fr}.problem-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
+/* V2 motion artwork: ambient, continuous orbit animation.
+   Decorative only; form content and controls remain unchanged. */
+.story-visual {
+  isolation: isolate;
+  min-height: 350px;
+}
+.story-visual::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  width: 390px;
+  aspect-ratio: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(184, 222, 164, .17) 0%, rgba(110, 174, 128, .065) 37%, transparent 70%);
+  filter: blur(18px);
+  pointer-events: none;
+}
+.visual-orbit {
+  top: 50%;
+  left: 50%;
+  border: 1px solid rgba(171, 214, 188, .27);
+  transform: translate(-50%, -50%);
+  will-change: transform;
+}
+.visual-orbit::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: conic-gradient(from 220deg, transparent 0%, transparent 56%, rgba(229, 241, 138, .73) 72%, rgba(229, 241, 138, .07) 81%, transparent 89%);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 1px));
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 1px));
+  pointer-events: none;
+}
+.visual-orbit::after {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: calc(50% - 4px);
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--mint);
+  box-shadow: 0 0 0 5px rgba(229, 241, 138, .12), 0 0 23px rgba(229, 241, 138, .48);
+}
+.orbit-one {
+  opacity: .96;
+  animation: cc-orbit 13s linear infinite;
+}
+.orbit-two {
+  opacity: .7;
+  animation: cc-orbit 23s linear infinite reverse;
+}
+.orbit-two::after {
+  width: 7px;
+  height: 7px;
+  top: -4px;
+  left: calc(50% - 3px);
+  background: #c5e9b8;
+}
+.orbit-three {
+  opacity: .42;
+  animation: cc-orbit 37s linear infinite;
+}
+.orbit-three::after {
+  width: 6px;
+  height: 6px;
+  top: -3px;
+  left: calc(50% - 3px);
+  background: #d3f2d6;
+}
+.visual-center {
+  position: relative;
+  z-index: 2;
+  animation: cc-heartbeat 6s ease-in-out infinite;
+}
+.visual-label {
+  z-index: 3;
+  border: 1px solid rgba(206, 240, 205, .21);
+  border-radius: 100px;
+  padding: 9px 12px;
+  background: rgba(18, 45, 40, .69);
+  backdrop-filter: blur(9px);
+  box-shadow: 0 7px 25px rgba(0, 0, 0, .1);
+}
+.visual-label::before {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-radius: 50%;
+  background: var(--mint);
+}
+@keyframes cc-orbit {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+@keyframes cc-heartbeat {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 13px rgba(229, 241, 138, .1), 0 0 35px rgba(229, 241, 138, .07); }
+  50% { transform: scale(1.045); box-shadow: 0 0 0 17px rgba(229, 241, 138, .075), 0 0 54px rgba(229, 241, 138, .16); }
+}
+/* On phones and tablets, the animation becomes a subtle background of the
+   introductory card, leaving the form entirely unobstructed. */
+@media (max-width: 820px) {
+  .story-inner { position: relative; isolation: isolate; }
+  .story-inner > :not(.story-visual) { position: relative; z-index: 1; }
+  .story-visual {
+    display: grid;
+    position: absolute;
+    top: 50%;
+    right: -154px;
+    left: auto;
+    width: 420px;
+    height: 420px;
+    min-height: 0;
+    margin: 0;
+    opacity: .25;
+    z-index: -1;
+    pointer-events: none;
+    transform: translateY(-50%);
+  }
+  .story-visual .visual-label { display: none; }
+  .visual-orbit { border-color: rgba(204, 245, 208, .35); }
+  .visual-center { box-shadow: 0 0 0 13px rgba(229, 241, 138, .1); }
+}
+@media (max-width: 520px) {
+  .story-visual { right: -221px; opacity: .22; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .visual-orbit, .visual-center { animation: none !important; }
+  .visual-orbit { transform: translate(-50%, -50%); }
+}
